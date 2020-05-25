@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Kolejka</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+  <div class="container mt-4" id="app">
+
+    <table class="table table-bordered" style="border: 10px solid black;">
+      <thead>
+        <tr>
+          <th scope="col">Liczby:</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="liczba, index in liczby">
+          <td>{{liczba.liczba}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <script>
+    var app = new Vue({
+      el: '#app',
+      data: {
+        liczby: []
+      },
+      mounted: function() {
+        axios.get('http://localhost/cgi-bin/kolejka.cgi')
+            .then(response => {
+              this.liczby = response.data;
+              console.log(response);
+            })
+            .catch(error => {
+              console.log(error);
+            });
+      }
+    })
+  </script>
+</body>
+</html>
